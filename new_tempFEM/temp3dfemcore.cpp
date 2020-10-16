@@ -478,70 +478,72 @@ void Temp3dfemcore::NRSolve()
             }
         }
 
-        sp_mat X(true, locs, vals, m_num_pts, m_num_pts, true, true);
-        SuperMatrix sluA;
-        NCformat *Astore;
-        double   *a;
-        int      *asub, *xa;
-        int      *perm_c; /* column permutation vector */
-        int      *perm_r; /* row permutations from partial pivoting */
-        SuperMatrix L;      /* factor L */
-        SuperMatrix U;      /* factor U */
-        SuperMatrix B;
-        int      nrhs, ldx, info, m, n, nnz;
-        double   *rhs;
-        mem_usage_t   mem_usage;
-        superlu_options_t options;
-        SuperLUStat_t stat;
+        //        sp_mat X(true, locs, vals, m_num_pts, m_num_pts, true, true);
+        //        SuperMatrix sluA;
+        //        NCformat *Astore;
+        //        double   *a;
+        //        int      *asub, *xa;
+        //        int      *perm_c; /* column permutation vector */
+        //        int      *perm_r; /* row permutations from partial pivoting */
+        //        SuperMatrix L;      /* factor L */
+        //        SuperMatrix U;      /* factor U */
+        //        SuperMatrix B;
+        //        int      nrhs, ldx, info, m, n, nnz;
+        //        double   *rhs;
+        //        mem_usage_t   mem_usage;
+        //        superlu_options_t options;
+        //        SuperLUStat_t stat;
 
-        set_default_options(&options);
+        //        set_default_options(&options);
 
-        /* create matrix A in Harwell-Boeing format.*/
-        m = m_num_pts; n = m_num_pts; nnz = X.n_nonzero;
-        a = const_cast<double *>(X.values);
-        asub = (int*)const_cast<unsigned int*>(X.row_indices);
-        xa = (int*)const_cast<unsigned int*>(X.col_ptrs);
-        dCreate_CompCol_Matrix(&sluA, m, n, nnz, a, asub, xa, SLU_NC, SLU_D, SLU_GE);
-        Astore = (NCformat *)sluA.Store;
-        printf("Dimension %dx%d; # nonzeros %d\n", sluA.nrow, sluA.ncol, Astore->nnz);
+        //        /* create matrix A in Harwell-Boeing format.*/
+        //        m = m_num_pts; n = m_num_pts; nnz = X.n_nonzero;
+        //        a = const_cast<double *>(X.values);
+        //        asub = (int*)const_cast<unsigned int*>(X.row_indices);
+        //        xa = (int*)const_cast<unsigned int*>(X.col_ptrs);
+        //        dCreate_CompCol_Matrix(&sluA, m, n, nnz, a, asub, xa, SLU_NC, SLU_D, SLU_GE);
+        //        Astore = (NCformat *)sluA.Store;
+        //        printf("Dimension %dx%d; # nonzeros %d\n", sluA.nrow, sluA.ncol, Astore->nnz);
 
-        nrhs = 1;
-        if (!(rhs = doubleMalloc(m * nrhs))) ABORT("Malloc fails for rhs[].");
-        //将内存拷贝过来
-        //memmove(rhs, unknown_b, 5*sizeof(double));
-        for (int i = 0; i < m; i++){
-            rhs[i] = F(i);
-        }
-        dCreate_Dense_Matrix(&B, m, nrhs, rhs, m, SLU_DN, SLU_D, SLU_GE);
+        //        nrhs = 1;
+        //        if (!(rhs = doubleMalloc(m * nrhs))) ABORT("Malloc fails for rhs[].");
+        //        //将内存拷贝过来
+        //        //memmove(rhs, unknown_b, 5*sizeof(double));
+        //        for (int i = 0; i < m; i++){
+        //            rhs[i] = F(i);
+        //        }
+        //        dCreate_Dense_Matrix(&B, m, nrhs, rhs, m, SLU_DN, SLU_D, SLU_GE);
 
-        if (!(perm_c = intMalloc(n))) ABORT("Malloc fails for perm_c[].");
-        if (!(perm_r = intMalloc(m))) ABORT("Malloc fails for perm_r[].");
+        //        if (!(perm_c = intMalloc(n))) ABORT("Malloc fails for perm_c[].");
+        //        if (!(perm_r = intMalloc(m))) ABORT("Malloc fails for perm_r[].");
 
-        /* Initialize the statistics variables. */
-        StatInit(&stat);
+        //        /* Initialize the statistics variables. */
+        //        StatInit(&stat);
 
-        dgssv(&options, &sluA, perm_c, perm_r, &L, &U, &B, &stat, &info);
-        if (info == 0) {
-//            std::ofstream myTemp3D("../tempFEM/test/Temp3D.txt");
-            /* This is how you could access the solution matrix. */
-            double *sol = (double*)((DNformat*)B.Store)->nzval;
-            for(int i = 0; i < m_num_pts; ++i){
-                Va[i] = sol[i];
-//                myTemp3D << Va[i] << endl;
-            }
-//            myTemp3D.close();
-        }else {
-            qDebug() << "info = " << info;
-        }
+        //        dgssv(&options, &sluA, perm_c, perm_r, &L, &U, &B, &stat, &info);
+        //        if (info == 0) {
+        ////            std::ofstream myTemp3D("../tempFEM/test/Temp3D.txt");
+        //            /* This is how you could access the solution matrix. */
+        //            double *sol = (double*)((DNformat*)B.Store)->nzval;
+        //            for(int i = 0; i < m_num_pts; ++i){
+        //                Va[i] = sol[i];
+        ////                myTemp3D << Va[i] << endl;
+        //            }
+        ////            myTemp3D.close();
+        //        }else {
+        //            qDebug() << "info = " << info;
+        //        }
 
-        SUPERLU_FREE(rhs);
-        //    SUPERLU_FREE(xact);
-        SUPERLU_FREE(perm_r);
-        SUPERLU_FREE(perm_c);
-        //    Destroy_CompCol_Matrix(&A);
-        Destroy_SuperMatrix_Store(&B);
-        Destroy_SuperNode_Matrix(&L);
-        Destroy_CompCol_Matrix(&U);
+        //        SUPERLU_FREE(rhs);
+        //        //    SUPERLU_FREE(xact);
+        //        SUPERLU_FREE(perm_r);
+        //        SUPERLU_FREE(perm_c);
+        //        //    Destroy_CompCol_Matrix(&A);
+        //        Destroy_SuperMatrix_Store(&B);
+        //        Destroy_SuperNode_Matrix(&L);
+        //        Destroy_CompCol_Matrix(&U);
+
+        Va = solveMatrix(locs, vals, F, m_num_pts);
 
         //6.判断收敛性
         double inner_error = 1;
@@ -575,9 +577,9 @@ void Temp3dfemcore::NRSolve()
     char fpath[256];
     sprintf(fpath,"../result/Temp3DNR_%d.txt",m_num_TetEle);
     std::ofstream mytemp(fpath);
-//    double temp[15076];
+    //    double temp[15076];
     for(int i = 0; i < m_num_pts; i++){
-         mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
     }
 
     qDebug()<<"Ok.";
@@ -587,4 +589,79 @@ void Temp3dfemcore::NRSolve()
 double Temp3dfemcore::TtoCond(double T)
 {
     return -0.00227583562+1.15480022e-4*T-7.90252856e-8*T*T+4.11702505e-11*T*T*T-7.43864331e-15*T*T*T*T;
+}
+
+double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
+{
+    sp_mat X(true, locs, vals, size, size, true, true);
+    SuperMatrix sluA;
+    NCformat *Astore;
+    double   *a;
+    int      *asub, *xa;
+    int      *perm_c; /* column permutation vector */
+    int      *perm_r; /* row permutations from partial pivoting */
+    SuperMatrix L;      /* factor L */
+    SuperMatrix U;      /* factor U */
+    SuperMatrix B;
+    int      nrhs, ldx, info, m, n, nnz;
+    double   *rhs;
+    mem_usage_t   mem_usage;
+    superlu_options_t options;
+    SuperLUStat_t stat;
+
+    set_default_options(&options);
+
+    /* create matrix A in Harwell-Boeing format.*/
+    m = size; n = size; nnz = X.n_nonzero;
+    a = const_cast<double *>(X.values);
+    asub = (int*)const_cast<unsigned int*>(X.row_indices);
+    xa = (int*)const_cast<unsigned int*>(X.col_ptrs);
+    dCreate_CompCol_Matrix(&sluA, m, n, nnz, a, asub, xa, SLU_NC, SLU_D, SLU_GE);
+    Astore = (NCformat *)sluA.Store;
+    printf("Dimension %dx%d; # nonzeros %d\n", sluA.nrow, sluA.ncol, Astore->nnz);
+
+    nrhs = 1;
+    if (!(rhs = doubleMalloc(m * nrhs))) ABORT("Malloc fails for rhs[].");
+    //将内存拷贝过来
+    //memmove(rhs, unknown_b, 5*sizeof(double));
+    for (int i = 0; i < m; i++){
+        rhs[i] = F(i);
+    }
+    dCreate_Dense_Matrix(&B, m, nrhs, rhs, m, SLU_DN, SLU_D, SLU_GE);
+
+    if (!(perm_c = intMalloc(n))) ABORT("Malloc fails for perm_c[].");
+    if (!(perm_r = intMalloc(m))) ABORT("Malloc fails for perm_r[].");
+
+    /* Initialize the statistics variables. */
+    StatInit(&stat);
+
+    dgssv(&options, &sluA, perm_c, perm_r, &L, &U, &B, &stat, &info);
+    double *sol, *res;
+    res = new double[size];
+    if (info == 0) {
+        //            std::ofstream myTemp3D("../tempFEM/test/Temp3D.txt");
+        /* This is how you could access the solution matrix. */
+        sol = (double*)((DNformat*)B.Store)->nzval;
+        //            myTemp3D.close();
+    }else {
+        qDebug() << "info = " << info;
+    }
+
+    for(int i = 0; i < m_num_pts; ++i){
+        res[i] = sol[i];
+    }
+    SUPERLU_FREE(rhs);
+    //    SUPERLU_FREE(xact);
+    SUPERLU_FREE(perm_r);
+    SUPERLU_FREE(perm_c);
+    //    Destroy_CompCol_Matrix(&A);
+    Destroy_SuperMatrix_Store(&B);
+    Destroy_SuperNode_Matrix(&L);
+    Destroy_CompCol_Matrix(&U);
+
+
+    qDebug() << "Matrix solver finish.";
+
+    return res;
+
 }

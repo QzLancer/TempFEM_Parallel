@@ -9,6 +9,8 @@
 #include <iomanip>
 #include <omp.h>
 
+using namespace arma;
+
 class Temp3dfemcore
 {
 public:
@@ -19,6 +21,7 @@ public:
     void setCondition();
     void NRSolve();
     double TtoCond(double T);
+    double *solveMatrix(umat locs, mat vals, vec F, int size);
 
 private:
     //直接从COMSOL分网数据中读取到的信息
