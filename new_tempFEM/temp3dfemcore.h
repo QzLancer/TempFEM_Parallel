@@ -20,10 +20,14 @@ public:
     void preCalculation();
     void setCondition();
     void NRSolve();
+    void DDTLMSolve();
     double TtoCond(double T);
     double *solveMatrix(umat locs, mat vals, vec F, int size);
 
-private:
+    //DDTLM相关
+    bool GenerateMetisMesh(int partition);
+
+protected:
     //直接从COMSOL分网数据中读取到的信息
     const char *m_COMSOLMesh;
     int m_num_pts{0};
@@ -39,7 +43,10 @@ private:
     const double Precision{1e-8};
 
     //区域分解相关信息
-
+    char m_METISMesh[256];
+    int m_num_part{0};
+    int *m_tpartTable;    //保存三角形单元在第几个分区
+    int *m_npartTable;    //保存节点在第几个分区
 };
 
 #endif // TEMP3DFEMCORE_H

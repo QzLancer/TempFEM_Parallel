@@ -70,4 +70,9 @@ struct CTriResistMatrix{
 struct CTetResistMatrix{
     double C[4][4];
 };
+
+struct CInterfacePoint{
+    double Y0{0};   //传输线导纳
+    double Vi{0};   //入射电压或者反射电压
+};
 #endif // DATATYPE_H

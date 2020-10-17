@@ -18,12 +18,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    temp3dfemcore.cpp
+    temp3dfemcore.cpp \
+    ../metis-5.1.0/programs/mpmetis.c \
+    ../metis-5.1.0/programs/cmdline_gpmetis.c \
+    ../metis-5.1.0/programs/io.c \
 
 HEADERS += \
     datatype.h \
     mainwindow.h \
-    temp3dfemcore.h
+    temp3dfemcore.h \
+    ../metis-5.1.0/programs/mpmetis.h \
 
 FORMS +=
 
@@ -49,8 +53,10 @@ INCLUDEPATH += $$PWD/../armadillo/include \
 
 DEPENDPATH += $$PWD/../armadillo/include
 
-LIBS += $$PWD/../metis.lib\
+LIBS += $$PWD/../metis.lib \
         $$PWD/../SuperLU_5.2.1/SuperLU/x64/Release/SuperLU.lib \
         $$PWD/../SuperLU_5.2.1/SuperLU/x64/Release/CBLAS.lib \
 
 CONFIG +=console
+
+QMAKE_CXXFLAGS += /openmp
