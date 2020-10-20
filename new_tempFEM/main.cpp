@@ -10,7 +10,7 @@ enum Demo{
 };
 
 void NR3d(){
-    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
+    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_132441.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();
@@ -18,7 +18,7 @@ void NR3d(){
 }
 
 void DDTLM3d(int part){
-    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
+    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_132441.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         NR3d();
         break;
     case DDTLM3D:
-        DDTLM3d(8);
+        DDTLM3d(16);
         break;
     }
     qDebug() << "Success!!";

@@ -654,9 +654,11 @@ void Temp3dfemcore::DDTLMSolve()
         vec F1 = zeros<vec>(freenodepart[part]);
         F.push_back(std::move(F1));
     }
+//    qDebug() << "F.size = " << F.size();
     omp_set_num_threads(m_num_part);    //设置线程数目
 #pragma omp parallel for
     for(int part = 0; part < m_num_part; ++part){
+//        QVector<double> i;
         QVector<double> error;
         //1.装配四面体单元线性部分
         double St, Ft, Se, Fe;
@@ -733,9 +735,13 @@ void Temp3dfemcore::DDTLMSolve()
     QVector<int> pos1 = pos;
     QVector<vec> F1 = F;
     int iter = 0;
+//    cout << m_num_part;
     for(; iter < MAX_OUTTER_ITER; ++iter){
         pos = pos1;
         F = F1;
+//        for(int i = 0 ; i < pos.size(); ++i){
+//            qDebug() << "pos " << i << " = " << pos[i];
+//        }
         omp_set_num_threads(m_num_part);
         double **inter_voltage_part = (double **)malloc(m_num_part * sizeof(double*));
         for(int part = 0; part < m_num_part; ++part){
@@ -760,6 +766,8 @@ void Temp3dfemcore::DDTLMSolve()
                     locs[part](0,pos[part]) = n;
                     locs[part](1,pos[part]) = n;
                     vals[part](0,pos[part]) = tl[part][i].Y0;
+//                    cout << "thread " << part << ": "<<F[part].size() << endl;
+//                    qDebug() << "F[part](n) = " << F[part](n);
                     F[part](n) = F[part](n) + current;
                 }
                 else{
@@ -876,7 +884,7 @@ void Temp3dfemcore::DDTLMSolve()
                     b += Va[part][i] * Va[part][i];
                 }
                 inner_error = sqrt(a0)/sqrt(b);
-                qDebug() << "inner_error part " << part << " = " << inner_error;
+//                qDebug() << "inner_error part " << part << " = " << inner_error;
 
                 if(inner_error < inner_precision){
                     qDebug() << "thread :" << omp_get_thread_num() << "inner iteration finish.";
