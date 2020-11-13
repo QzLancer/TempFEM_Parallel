@@ -7,6 +7,11 @@
 
 using namespace arma;
 
+Temp3dfemcore::Temp3dfemcore()
+{
+
+}
+
 Temp3dfemcore::Temp3dfemcore(const char *fn):
     m_COMSOLMesh(fn),
     mp_3DNode(nullptr),
@@ -18,6 +23,18 @@ Temp3dfemcore::Temp3dfemcore(const char *fn):
     m_npartTable(new int(0))
 {
 
+}
+
+Temp3dfemcore::~Temp3dfemcore()
+{
+    SUPERLU_FREE(rhs);
+    //    SUPERLU_FREE(xact);
+    SUPERLU_FREE(perm_r);
+    SUPERLU_FREE(perm_c);
+    //    Destroy_CompCol_Matrix(&A);
+    Destroy_SuperMatrix_Store(&B);
+    Destroy_SuperNode_Matrix(&L);
+    Destroy_CompCol_Matrix(&U);
 }
 
 bool Temp3dfemcore::load3DFEMCOMSOL()
@@ -966,23 +983,7 @@ double Temp3dfemcore::TtoCond(double T)
 
 double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
 {
-    cout << "size = " << size << endl;
     sp_mat X(true, locs, vals, size, size, true, true);
-    SuperMatrix sluA;
-    NCformat *Astore;
-    double   *a;
-    int      *asub, *xa;
-    int      *perm_c; /* column permutation vector */
-    int      *perm_r; /* row permutations from partial pivoting */
-    SuperMatrix L;      /* factor L */
-    SuperMatrix U;      /* factor U */
-    SuperMatrix B;
-    int      nrhs, ldx, info, m, n, nnz;
-    double   *rhs;
-    mem_usage_t   mem_usage;
-    superlu_options_t options;
-    SuperLUStat_t stat;
-
     set_default_options(&options);
 
     /* create matrix A in Harwell-Boeing format.*/
@@ -1024,15 +1025,6 @@ double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
     for(int i = 0; i < size; ++i){
         res[i] = sol[i];
     }
-    SUPERLU_FREE(rhs);
-    //    SUPERLU_FREE(xact);
-    SUPERLU_FREE(perm_r);
-    SUPERLU_FREE(perm_c);
-    //    Destroy_CompCol_Matrix(&A);
-    Destroy_SuperMatrix_Store(&B);
-    Destroy_SuperNode_Matrix(&L);
-    Destroy_CompCol_Matrix(&U);
-
 
     //        qDebug() << "Matrix solver finish.";
 

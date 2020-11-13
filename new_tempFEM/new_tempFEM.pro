@@ -17,17 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
+#    mainwindow.cpp \
+    matsolver.cpp \
     temp3dfemcore.cpp \
     ../metis-5.1.0/programs/mpmetis.c \
     ../metis-5.1.0/programs/cmdline_gpmetis.c \
     ../metis-5.1.0/programs/io.c \
+    tlmcore.cpp
 
 HEADERS += \
     datatype.h \
-    mainwindow.h \
+#    mainwindow.h \
+    matsolver.h \
     temp3dfemcore.h \
     ../metis-5.1.0/programs/mpmetis.h \
+    tlmcore.h
 
 FORMS +=
 

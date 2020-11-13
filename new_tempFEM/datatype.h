@@ -71,6 +71,14 @@ struct CTetResistMatrix{
     double C[4][4];
 };
 
+struct CTetConnanceMatrix{
+    double Y0[4][4];
+};
+
+struct CTetVoltageMatrix{
+    double Vi[4][4];
+};
+
 struct CInterfacePoint{
     double Y0{0};   //传输线导纳
     double Vi{0};   //入射电压或者反射电压

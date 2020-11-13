@@ -14,7 +14,9 @@ using namespace arma;
 class Temp3dfemcore
 {
 public:
+    Temp3dfemcore();
     Temp3dfemcore(const char *fn);
+    ~Temp3dfemcore();
     bool load3DFEMCOMSOL();
     void generateMetisMesh(int part);
     void preCalculation();
@@ -47,6 +49,21 @@ protected:
     int m_num_part{0};
     int *m_tpartTable;    //保存三角形单元在第几个分区
     int *m_npartTable;    //保存节点在第几个分区
+
+    SuperMatrix sluA;
+    NCformat *Astore;
+    double   *a;
+    int      *asub, *xa;
+    int      *perm_c; /* column permutation vector */
+    int      *perm_r; /* row permutations from partial pivoting */
+    SuperMatrix L;      /* factor L */
+    SuperMatrix U;      /* factor U */
+    SuperMatrix B;
+    int      nrhs, ldx, info, m, n, nnz;
+    double   *rhs;
+    mem_usage_t   mem_usage;
+    superlu_options_t options;
+    SuperLUStat_t stat;
 };
 
 #endif // TEMP3DFEMCORE_H
