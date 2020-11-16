@@ -46,6 +46,7 @@ void TLMCore::TLMSolve1()
             for(int j = 0; j < 4; ++j){
                 TetResist[k].C[i][j] = (mp_TetEle[k].q[i]*mp_TetEle[k].q[j]+mp_TetEle[k].r[i]*mp_TetEle[k].r[j]+mp_TetEle[k].s[i]*mp_TetEle[k].s[j])/(36*mp_TetEle[k].Volume);
                 TetY0[k].Y0[i][j] = -mp_TetEle[i].cond * TetResist[k].C[i][j];
+//                TetY0[k].Y0[i][j] = 0.0001;
             }
         }
     }
@@ -114,22 +115,53 @@ void TLMCore::TLMSolve1()
 
     //6. 非线性单元左侧系数矩阵装配
     double Yt;
+    double Y0 = 0.3;
     for(int k = 0; k < m_num_TetEle; ++k){
         if(mp_TetEle[k].LinearFlag == 0){
             for(int i = 0; i < 4; ++i){
+                double Yii = 0;
                 for(int j = 0; j < 4; ++j){
-                    Yt = -TetY0[k].Y0[i][j];
-                    locs(0, pos) = mp_TetEle[k].n[i];
-                    locs(1, pos) = mp_TetEle[k].n[j];
-                    vals(0, pos) = Yt;
-                    ++pos;
+//                    Yt = -TetY0[k].Y0[i][j];
+//                    locs(0, pos) = mp_TetEle[k].n[i];
+//                    locs(1, pos) = mp_TetEle[k].n[j];
+//                    vals(0, pos) = Yt;
+//                    ++pos;
+
+                    if(i != j){
+                        if((TetResist[k].C[i][j] < 0)){
+                            Yt = -TetY0[k].Y0[i][j];
+                            Yii -= Yt;
+                            locs(0, pos) = mp_TetEle[k].n[i];
+                            locs(1, pos) = mp_TetEle[k].n[j];
+                            vals(0, pos) = Yt;
+                            ++pos;
+                        }
+                        else{
+                            locs(0, pos) = mp_TetEle[k].n[i];
+                            locs(1, pos) = mp_TetEle[k].n[j];
+                            vals(0, pos) = 0;
+                            ++pos;
+                        }
+                    }
                 }
+                locs(0, pos) = mp_TetEle[k].n[i];
+                locs(1, pos) = mp_TetEle[k].n[i];
+                vals(0, pos) = Yii;
+                ++pos;
             }
         }
     }
 
     //7.第一次求解，由于Vi=0，右侧附加电流也为0
     Va_old = solveMatrix(locs, vals, F, m_num_pts);
+
+    char Vaoldpath[256];
+    sprintf(Vaoldpath,"../result/Temp3DTLM_%d_old.txt",m_num_TetEle);
+    std::ofstream myoldtemp(Vaoldpath);
+    for(int i = 0; i < m_num_pts; i++){
+        myoldtemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
+    }
+    qDebug() << "First solve finish!";
 
     //8. 后续迭代求解 反射->入射
     const int ITER_MAX = 200;
@@ -138,26 +170,27 @@ void TLMCore::TLMSolve1()
         for(int k = 0; k < m_num_TetEle; ++k){
             if(mp_TetEle[k].LinearFlag == 0){
                 double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
-                double cond = TtoCond(avgT);
+//                double cond = TtoCond(avgT);
+                double cond = 0.03;
                 for(int i = 0; i < 4; ++i){
                     for(int j = 0; j < 4; ++j){
-                        double Si = cond * TetResist[k].C[i][j];
-                        double Vd  = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]];
-                        if(Si < 0){
-//                            TetVi[k].Vi[i][j] = Vd - TetVi[k].Vi[i][j];     //Vr
-//                            double I0 = 2*TetVi[k].Vi[i][j]*TetY0[k].Y0[i][j];
-////                            double Vc = I0*TetY0[k].Y0[i][j] /(TetY0[k].Y0[i][j] - Si);
-//                            double Vc = I0/(TetY0[k].Y0[i][j] - Si);
-//                            TetVi[k].Vi[i][j] = Vc - TetVi[k].Vi[i][j];
-//                            I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
+                        if(i != j){
+                            double Si = cond * TetResist[k].C[i][j];
+                            double Vd  = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]];
+                            if(Si < 0){
+                                double Vr = Vd - TetVi[k].Vi[i][j];
+                                double Vc = 2*Vr*TetY0[k].Y0[i][j]/(TetY0[k].Y0[i][j] - Si);
+                                TetVi[k].Vi[i][j] = Vc - Vr;
+                                I(mp_TetEle[k].n[i]) += 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
 
-                            double Vr = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]] - TetVi[k].Vi[i][j];
-                            double Vc = 2*Vr*TetY0[k].Y0[i][j]/(TetY0[k].Y0[i][j] - Si);
-                            TetVi[k].Vi[i][j] = Vc - Vr;
-                            I(mp_TetEle[k].n[i]) += 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
-                        }
-                        else{
-                            I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
+//                                double Vr = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]] - TetVi[k].Vi[i][j];
+//                                double Vc = 2*Vr*Y0/(Y0 - Si);
+//                                TetVi[k].Vi[i][j] = Vc - Vr;
+//                                I(mp_TetEle[k].n[i]) += 2*Y0*TetVi[k].Vi[i][j];
+                            }
+                            else{
+                                I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
+                            }
                         }
                     }
                 }

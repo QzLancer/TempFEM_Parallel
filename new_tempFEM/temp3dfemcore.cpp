@@ -372,7 +372,7 @@ void Temp3dfemcore::setCondition()
             mp_TetEle[i].LinearFlag = 1;
         }
         else if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 11)){
-            mp_TetEle[i].cond = 0.03;
+            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
 //            mp_TetEle[i].cond = 0.001;
             mp_TetEle[i].Material = 3;
             mp_TetEle[i].LinearFlag = 0;
