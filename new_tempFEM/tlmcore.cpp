@@ -132,43 +132,91 @@ void TLMCore::TLMSolve1()
     Va_old = solveMatrix(locs, vals, F, m_num_pts);
 
     //8. 后续迭代求解 反射->入射
-    vec I = zeros<vec>(m_num_pts);
-    for(int k = 0; k < m_num_TetEle; ++k){
-        if(mp_TetEle[k].LinearFlag == 0){
-            double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
-            double cond = TtoCond(avgT);
-            for(int i = 0; i < 4; ++i){
-                for(int j = 0; j < 4; ++j){
-                    double Si = cond * TetResist[k].C[i][j];
-                    double Vd  = Va[mp_TetEle[k].n[i]] - Va[mp_TetEle[k].n[j]];
-                    if(Si < 0){
-                        TetVi[k].Vi[i][j] = Vd - TetVi[k].Vi[i][j];
-                        double I0 = 2*TetVi[k].Vi[i][j]*TetY0[k].Y0[i][j];
-                        double Vc = I0*TetY0[k].Y0[i][j] /(TetY0[k].Y0[i][j] - Si);
-                        TetVi[k].Vi[i][j] = Vc - TetVi[k].Vi[i][j];
-                        I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
-                    }
-                    else{
-                        I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
+    const int ITER_MAX = 200;
+    for(int iter = 0; iter < ITER_MAX; ++iter){
+        vec I = zeros<vec>(m_num_pts);
+        for(int k = 0; k < m_num_TetEle; ++k){
+            if(mp_TetEle[k].LinearFlag == 0){
+                double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
+                double cond = TtoCond(avgT);
+                for(int i = 0; i < 4; ++i){
+                    for(int j = 0; j < 4; ++j){
+                        double Si = cond * TetResist[k].C[i][j];
+                        double Vd  = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]];
+                        if(Si < 0){
+//                            TetVi[k].Vi[i][j] = Vd - TetVi[k].Vi[i][j];     //Vr
+//                            double I0 = 2*TetVi[k].Vi[i][j]*TetY0[k].Y0[i][j];
+////                            double Vc = I0*TetY0[k].Y0[i][j] /(TetY0[k].Y0[i][j] - Si);
+//                            double Vc = I0/(TetY0[k].Y0[i][j] - Si);
+//                            TetVi[k].Vi[i][j] = Vc - TetVi[k].Vi[i][j];
+//                            I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
+
+                            double Vr = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]] - TetVi[k].Vi[i][j];
+                            double Vc = 2*Vr*TetY0[k].Y0[i][j]/(TetY0[k].Y0[i][j] - Si);
+                            TetVi[k].Vi[i][j] = Vc - Vr;
+                            I(mp_TetEle[k].n[i]) += 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
+                        }
+                        else{
+                            I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
+                        }
                     }
                 }
             }
         }
+
+        vec F2 = F + I;
+
+        //分解后的LU直接计算
+        Va = triangleSolve(F2);
+//        Va = solveMatrix(locs, vals, F2, m_num_pts);
+
+        ////////////测试，输出I
+        char fpath[256];
+        sprintf(fpath,"../result/I_%d.txt",m_num_TetEle);
+        std::ofstream myI(fpath);
+        for(int i = 0; i < m_num_pts; i++){
+            myI << I[i] << endl;
+        }
+        sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);;
+        //    double temp[15076];
+        std::ofstream mytemp(fpath);
+        for(int i = 0; i < m_num_pts; i++){
+            mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+        }
+
+
+        //判断收敛性
+        double inner_error = 1;
+        double a0 = 0, b = 0;
+        for(int i = 0; i < m_num_pts; ++i){
+            a0 += (Va_old[i] - Va[i])*(Va_old[i] - Va[i]);
+            b += Va[i] * Va[i];
+        }
+        inner_error = sqrt(a0)/sqrt(b);
+        qDebug() << "inner_error = " << inner_error;
+        if(inner_error > Precision){
+            qDebug() << "iter step " << iter;
+            for(int i = 0; i < m_num_pts; ++i){
+                Va_old[i] = Va[i];
+            }
+        }else{
+            qDebug() << "iter step " << iter;
+            for(int i = 0; i < m_num_pts; ++i){
+                mp_3DNode[i].V = Va[i];
+            }
+            break;
+        }
     }
 
-    vec F2 = F + I;
 
-    //分解后的LU直接计算
-    Va = triangleSolve(F2);
-
-    //输出结果
-    char fpath[256];
-    sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);
-    std::ofstream mytemp(fpath);
-    //    double temp[15076];
-    for(int i = 0; i < m_num_pts; i++){
-        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
-    }
+//    //输出结果
+//    char fpath[256];
+//    sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);
+//    std::ofstream mytemp(fpath);
+//    //    double temp[15076];
+//    for(int i = 0; i < m_num_pts; i++){
+//        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+//    }
 
     qDebug()<<"Ok.";
     //释放内存
