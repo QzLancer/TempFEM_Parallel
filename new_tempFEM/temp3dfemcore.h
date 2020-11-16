@@ -25,6 +25,7 @@ public:
     void DDTLMSolve();
     double TtoCond(double T);
     double *solveMatrix(umat locs, mat vals, vec F, int size);
+    double *triangleSolve(vec F);
 
     //DDTLM相关
     bool GenerateMetisMesh(int partition);
@@ -64,6 +65,8 @@ protected:
     mem_usage_t   mem_usage;
     superlu_options_t options;
     SuperLUStat_t stat;
+    trans_t trans;
+
 };
 
 #endif // TEMP3DFEMCORE_H

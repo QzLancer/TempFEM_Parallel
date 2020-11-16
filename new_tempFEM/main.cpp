@@ -39,7 +39,7 @@ void TLM3d1(){
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Demo showwhat = NR3D;
+    Demo showwhat = TLM1;
     switch (showwhat) {
     case NR3D:
         NR3d();

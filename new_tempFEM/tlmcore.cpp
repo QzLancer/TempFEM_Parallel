@@ -113,7 +113,6 @@ void TLMCore::TLMSolve1()
     }
 
     //6. 非线性单元左侧系数矩阵装配
-    vec I = zeros<vec>(m_num_pts);
     double Yt;
     for(int k = 0; k < m_num_TetEle; ++k){
         if(mp_TetEle[k].LinearFlag == 0){
@@ -130,9 +129,37 @@ void TLMCore::TLMSolve1()
     }
 
     //7.第一次求解，由于Vi=0，右侧附加电流也为0
-    Va = solveMatrix(locs, vals, F, m_num_pts);
+    Va_old = solveMatrix(locs, vals, F, m_num_pts);
 
+    //8. 后续迭代求解 反射->入射
+    vec I = zeros<vec>(m_num_pts);
+    for(int k = 0; k < m_num_TetEle; ++k){
+        if(mp_TetEle[k].LinearFlag == 0){
+            double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
+            double cond = TtoCond(avgT);
+            for(int i = 0; i < 4; ++i){
+                for(int j = 0; j < 4; ++j){
+                    double Si = cond * TetResist[k].C[i][j];
+                    double Vd  = Va[mp_TetEle[k].n[i]] - Va[mp_TetEle[k].n[j]];
+                    if(Si < 0){
+                        TetVi[k].Vi[i][j] = Vd - TetVi[k].Vi[i][j];
+                        double I0 = 2*TetVi[k].Vi[i][j]*TetY0[k].Y0[i][j];
+                        double Vc = I0*TetY0[k].Y0[i][j] /(TetY0[k].Y0[i][j] - Si);
+                        TetVi[k].Vi[i][j] = Vc - TetVi[k].Vi[i][j];
+                        I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
+                    }
+                    else{
+                        I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
+                    }
+                }
+            }
+        }
+    }
 
+    vec F2 = F + I;
+
+    //分解后的LU直接计算
+    Va = triangleSolve(F2);
 
     //输出结果
     char fpath[256];
@@ -140,7 +167,7 @@ void TLMCore::TLMSolve1()
     std::ofstream mytemp(fpath);
     //    double temp[15076];
     for(int i = 0; i < m_num_pts; i++){
-        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
     }
 
     qDebug()<<"Ok.";

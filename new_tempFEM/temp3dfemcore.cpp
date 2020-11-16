@@ -35,6 +35,18 @@ Temp3dfemcore::~Temp3dfemcore()
     Destroy_SuperMatrix_Store(&B);
     Destroy_SuperNode_Matrix(&L);
     Destroy_CompCol_Matrix(&U);
+    Destroy_SuperMatrix_Store(&sluA);
+    free(a);
+    free(asub);
+    free(xa);
+    free(m_tpartTable);
+    free(m_npartTable);
+    delete m_COMSOLMesh;
+    delete [] mp_3DNode;
+    delete [] mp_VtxEle;
+    delete [] mp_TriEle;
+    delete [] mp_TetEle;
+
 }
 
 bool Temp3dfemcore::load3DFEMCOMSOL()
@@ -360,7 +372,8 @@ void Temp3dfemcore::setCondition()
             mp_TetEle[i].LinearFlag = 1;
         }
         else if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 11)){
-            mp_TetEle[i].cond = 0.03;
+//            mp_TetEle[i].cond = 0.03;
+            mp_TetEle[i].cond = 0.001;
             mp_TetEle[i].Material = 3;
             mp_TetEle[i].LinearFlag = 0;
         }
@@ -1012,7 +1025,7 @@ double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
 
     dgssv(&options, &sluA, perm_c, perm_r, &L, &U, &B, &stat, &info);
     double *sol, *res;
-    res = new double[size];
+    res = doubleMalloc(m);
     if (info == 0) {
         //            std::ofstream myTemp3D("../tempFEM/test/Temp3D.txt");
         /* This is how you could access the solution matrix. */
@@ -1023,6 +1036,40 @@ double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
     }
 
     for(int i = 0; i < size; ++i){
+        res[i] = sol[i];
+    }
+
+    //        qDebug() << "Matrix solver finish.";
+
+    return res;
+
+}
+
+double *Temp3dfemcore::triangleSolve(vec F)
+{
+    trans = NOTRANS;
+
+    //将内存拷贝过来
+    //memmove(rhs, unknown_b, 5*sizeof(double));
+    for (int i = 0; i < m; i++){
+        rhs[i] = F(i);
+    }
+    dCreate_Dense_Matrix(&B, m, nrhs, rhs, m, SLU_DN, SLU_D, SLU_GE);
+
+    double *sol, *res;
+    res = doubleMalloc(m);
+    dgstrs(trans, &L, &U, perm_r, perm_c, &B, &stat, &info);
+
+    if (info == 0) {
+        //            std::ofstream myTemp3D("../tempFEM/test/Temp3D.txt");
+        /* This is how you could access the solution matrix. */
+        sol = (double*)((DNformat*)B.Store)->nzval;
+        //            myTemp3D.close();
+    }else {
+        qDebug() << "info = " << info;
+    }
+
+    for(int i = 0; i < m; ++i){
         res[i] = sol[i];
     }
 
