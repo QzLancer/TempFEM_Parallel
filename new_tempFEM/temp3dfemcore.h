@@ -6,6 +6,8 @@
 #endif
 #include <armadillo>
 #include "slu_ddefs.h"
+#include "matsolver.h"
+
 #include <iomanip>
 #include <omp.h>
 
@@ -24,8 +26,6 @@ public:
     void NRSolve();
     void DDTLMSolve();
     double TtoCond(double T);
-    double *solveMatrix(umat locs, mat vals, vec F, int size);
-    double *triangleSolve(vec F);
 
     //DDTLM相关
     bool GenerateMetisMesh(int partition);
@@ -51,22 +51,7 @@ protected:
     int *m_tpartTable;    //保存三角形单元在第几个分区
     int *m_npartTable;    //保存节点在第几个分区
 
-    SuperMatrix sluA;
-    NCformat *Astore;
-    double   *a;
-    int      *asub, *xa;
-    int      *perm_c; /* column permutation vector */
-    int      *perm_r; /* row permutations from partial pivoting */
-    SuperMatrix L;      /* factor L */
-    SuperMatrix U;      /* factor U */
-    SuperMatrix B;
-    int      nrhs, ldx, info, m, n, nnz;
-    double   *rhs;
-    mem_usage_t   mem_usage;
-    superlu_options_t options;
-    SuperLUStat_t stat;
-    trans_t trans;
-
+    MatSolver *solver;
 };
 
 #endif // TEMP3DFEMCORE_H

@@ -154,7 +154,8 @@ void TLMCore::TLMSolve1()
     }
 
     //7.第一次求解，由于Vi=0，右侧附加电流也为0
-    Va_old = solveMatrix(locs, vals, F, m_num_pts);
+//    Va_old = solveMatrix(locs, vals, F, m_num_pts);
+    Va_old = solver->solveMatrix(locs, vals, F, m_num_pts);
 
     char Vaoldpath[256];
     sprintf(Vaoldpath,"../result/Temp3DTLM_%d_old.txt",m_num_TetEle);
@@ -203,8 +204,9 @@ void TLMCore::TLMSolve1()
         vec F2 = F + I;
 
         //分解后的LU直接计算
-        Va = triangleSolve(F2);
+//        Va = triangleSolve(F2);
 //        Va = solveMatrix(locs, vals, F2, m_num_pts);
+        Va = solver->solveMatrix_LU(F2);
 
         ////////////测试，输出I
         char fpath[256];

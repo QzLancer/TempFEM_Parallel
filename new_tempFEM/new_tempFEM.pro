@@ -4,11 +4,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS += /wd"4819"
+
+QMAKE_CXXFLAGS += /openmp
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+
+DEFINES += _CRT_SECURE_NO_WARNINGS __OPENMP
 
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -19,6 +25,7 @@ SOURCES += \
     main.cpp \
 #    mainwindow.cpp \
     matsolver.cpp \
+    serialmatsolver.cpp \
     temp3dfemcore.cpp \
     ../metis-5.1.0/programs/mpmetis.c \
     ../metis-5.1.0/programs/cmdline_gpmetis.c \
@@ -29,6 +36,7 @@ HEADERS += \
     datatype.h \
 #    mainwindow.h \
     matsolver.h \
+    serialmatsolver.h \
     temp3dfemcore.h \
     ../metis-5.1.0/programs/mpmetis.h \
     tlmcore.h
@@ -63,4 +71,13 @@ LIBS += $$PWD/../metis.lib \
 
 CONFIG +=console
 
-QMAKE_CXXFLAGS += /openmp
+
+# SUPERLU_MT
+LIBS += \
+    $$PWD/../SuperLU_MT/LIB/SuperLU_MT_3.1.lib \
+#    $$PWD/../SuperLU_MT/LIB/RELEASE/openblas.lib \
+
+INCLUDEPATH += \
+    $$PWD/../SuperLU_MT/SRC \
+#    D:/SuperLU_MT_3.1/OpenBLAS-v0.2.15-Win64-int32/include \
+

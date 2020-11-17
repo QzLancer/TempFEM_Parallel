@@ -5,12 +5,16 @@
 #define ARMA_32BIT_WORD
 #endif
 #include <armadillo>
-#include "slu_ddefs.h"
+
+using namespace arma;
 
 class MatSolver
 {
 public:
     MatSolver();
+    virtual double *solveMatrix(umat locs, mat vals, vec F, int size) = 0;
+    virtual double *solveMatrix_LU(vec F) = 0;
+    virtual ~MatSolver() = default;
 };
 
 #endif // MATSOLVER_H
