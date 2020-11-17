@@ -12,7 +12,7 @@ enum Demo{
 };
 
 void NR3d(){
-    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
+    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_455944.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();
@@ -29,7 +29,7 @@ void DDTLM3d(int part){
 }
 
 void TLM3d1(){
-    TLMCore *temp = new TLMCore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
+    TLMCore *temp = new TLMCore("../new_tempFEM/model/mesh_contactor3D_455944.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();

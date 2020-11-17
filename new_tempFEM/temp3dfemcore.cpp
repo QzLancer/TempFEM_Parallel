@@ -1,5 +1,7 @@
 #include "temp3dfemcore.h"
 #include "mpmetis.h"
+#include "vector"
+#include "map"
 
 #include <QDebug>
 
@@ -996,14 +998,56 @@ double Temp3dfemcore::TtoCond(double T)
 
 double *Temp3dfemcore::solveMatrix(umat locs, mat vals, vec F, int size)
 {
-    sp_mat X(true, locs, vals, size, size, true, true);
-    set_default_options(&options);
+//    sp_mat X(true, locs, vals, size, size, true, true);
 
-    /* create matrix A in Harwell-Boeing format.*/
-    m = size; n = size; nnz = X.n_nonzero;
-    a = const_cast<double *>(X.values);
-    asub = (int*)const_cast<unsigned int*>(X.row_indices);
-    xa = (int*)const_cast<unsigned int*>(X.col_ptrs);
+//    /* create matrix A in Harwell-Boeing format.*/
+//    m = size; n = size; nnz = X.n_nonzero;
+//    a = const_cast<double *>(X.values);
+//    asub = (int*)const_cast<unsigned int*>(X.row_indices);
+//    xa = (int*)const_cast<unsigned int*>(X.col_ptrs);
+
+    //将数据转化成列压缩存储形式
+    m = size; n = size;
+    std::map<int, std::map<int, double>> mapmatrix; //mapmatrix[列编号][行编号][值]
+    int row, col;
+    double val;
+    for(int i = 0; i < vals.size(); ++i){
+        row = locs(0,i);
+        col = locs(1,i);
+        val = vals(i);
+        if(mapmatrix.count(col) == 0){
+            std::map<int, double> temp;
+            temp[row] = val;
+            mapmatrix[col] = temp;
+        }else{
+            if(mapmatrix[col].count(row) == 0){
+                mapmatrix[col][row] = val;
+            }else{
+                mapmatrix[col][row] += val;
+            }
+        }
+    }
+
+    nnz = 0;
+    xa = intMalloc(size+1);
+    xa[0] = 0;
+    for(std::map<int, std::map<int, double>>::iterator m = mapmatrix.begin(); m != mapmatrix.end(); ++m){
+        nnz += m->second.size();
+        xa[(m->first)+1] = nnz;
+    }
+    asub = intMalloc(nnz);
+    a = doubleMalloc(nnz);
+    int i = 0;
+    for(std::map<int, std::map<int, double>>::iterator m = mapmatrix.begin(); m != mapmatrix.end(); ++m){
+        for(std::map<int, double>::iterator n = m->second.begin(); n != m->second.end(); ++n){
+            asub[i] = n->first;
+            a[i] = n->second;
+//            cout << "a:" << i << " = " << a[i] << endl;
+            ++i;
+        }
+    }
+
+    set_default_options(&options);
     dCreate_CompCol_Matrix(&sluA, m, n, nnz, a, asub, xa, SLU_NC, SLU_D, SLU_GE);
     Astore = (NCformat *)sluA.Store;
     //        printf("Dimension %dx%d; # nonzeros %d\n", sluA.nrow, sluA.ncol, Astore->nnz);

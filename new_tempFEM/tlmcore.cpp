@@ -1,6 +1,7 @@
 #include "tlmcore.h"
 
 #include <QDebug>
+#include <omp.h>
 
 TLMCore::TLMCore(const char *fn):
     Temp3dfemcore(fn)
@@ -167,6 +168,8 @@ void TLMCore::TLMSolve1()
     const int ITER_MAX = 200;
     for(int iter = 0; iter < ITER_MAX; ++iter){
         vec I = zeros<vec>(m_num_pts);
+        omp_set_num_threads(8);
+#pragma omp parallel for
         for(int k = 0; k < m_num_TetEle; ++k){
             if(mp_TetEle[k].LinearFlag == 0){
                 double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
