@@ -10,6 +10,7 @@ public:
     ParallelMatSolver();
     virtual double * solveMatrix_LU(vec F) override;
     virtual double * solveMatrix(umat locs, mat vals, vec F, int size) override;
+    virtual double * solveMatrix1(umat locs, mat vals, vec F, int size) override;
     virtual ~ParallelMatSolver() override;
 
 private:
@@ -33,6 +34,15 @@ private:
     SuperMatrix AC;
     superlumt_options_t options;
     fact_t fact;
+
+    //solve1新增变量
+    SuperMatrix sluX;
+    equed_t     equed;
+    int_t       ldx;
+    double      *rhsb, *rhsx, *xact;
+    double      *R, *C;
+    double      *ferr, *berr;
+    double      u, rpg, rcond;
 };
 
 #endif // PARALLELMATSOLVER_H

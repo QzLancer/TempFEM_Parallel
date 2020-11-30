@@ -74,10 +74,10 @@ CONFIG +=console
 
 # SUPERLU_MT
 LIBS += \
-    $$PWD/../SuperLU_MT/LIB/SuperLU_MT_3.1.lib \
+#    $$PWD/../SuperLU_MT/LIB/SuperLU_MT_3.1.lib \
 #    $$PWD/../SuperLU_MT/LIB/RELEASE/openblas.lib \
 
 INCLUDEPATH += \
-    $$PWD/../SuperLU_MT/SRC \
+#    $$PWD/../SuperLU_MT/SRC \
 #    D:/SuperLU_MT_3.1/OpenBLAS-v0.2.15-Win64-int32/include \
 
