@@ -7,6 +7,8 @@ ParallelMatSolver::ParallelMatSolver()
 
 double *ParallelMatSolver::solveMatrix_LU(vec F)
 {
+    double t1 = SuperLU_timer_();
+
     for (int i = 0; i < m; i++){
         rhs[i] = F(i);
     }
@@ -14,10 +16,10 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
 
     dgstrs(trans, &L, &U, perm_r, perm_c, &B, &Gstat1, &info);
 
-    options.fact = FACTORED; /* Indicate the factored form of sluA is supplied. */
-    options.usepr = YES;
+//    options.fact = FACTORED; /* Indicate the factored form of sluA is supplied. */
+//    options.usepr = YES;
 //    get_perm_c(permc_spec, &sluA, perm_c);
-    //t1 = SuperLU_timer_();
+//    t1 = SuperLU_timer_();
 //    pdgssvx(nprocs, &options, &A, perm_c, perm_r,
 //        &equed, R, C, &L, &U, &B, &sluX, &rpg, &rcond,
 //        ferr, berr, &superlu_memusage, &info);
@@ -25,8 +27,8 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
     double *sol, *res;
     res = doubleMalloc(m);
     if (info == 0 || info == n + 1) {
-//        sol = (double*)((DNformat*)B.Store)->nzval;
-        sol = (double*)((DNformat*)sluX.Store)->nzval;
+        sol = (double*)((DNformat*)B.Store)->nzval;
+//        sol = (double*)((DNformat*)sluX.Store)->nzval;
     } else if (info > 0 && lwork == -1) {
         printf("dgssv() error returns INFO= " IFMT "\n", info);
         if ( info <= n ) { /* factorization completes */
@@ -41,11 +43,22 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
     for(int i = 0; i < n; ++i){
         res[i] = sol[i];
     }
+
+    t1 = SuperLU_timer_() - t1;
+
+    cout << "solveMatrix_LU time :" << t1 << endl;
     return res;
 }
 
 double *ParallelMatSolver::solveMatrix(umat locs, mat vals, vec F, int size)
 {
+    if(L.ncol > 0 || L.nrow > 0){
+        Destroy_SuperNode_Matrix(&L);
+    }
+    if(U.ncol > 0 || U.nrow > 0){
+        Destroy_CompCol_Matrix(&U);
+    }
+
     //将数据转化成列压缩存储形式
     m = size; n = size;
     std::map<int, std::map<int, double>> mapmatrix; //mapmatrix[列编号][行编号][值]
@@ -144,6 +157,7 @@ double *ParallelMatSolver::solveMatrix(umat locs, mat vals, vec F, int size)
     for(int i = 0; i < size; ++i){
         res[i] = sol[i];
     }
+
     return res;
 }
 
