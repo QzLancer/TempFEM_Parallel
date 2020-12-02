@@ -1,5 +1,6 @@
 #include "parallelmatsolver.h"
 
+#include <omp.h>
 ParallelMatSolver::ParallelMatSolver()
 {
     nprocs = 8;
@@ -9,13 +10,15 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
 {
     double t1 = SuperLU_timer_();
 
+    omp_set_num_threads(8);
+#pragma omp parallel for
     for (int i = 0; i < m; i++){
         rhs[i] = F(i);
     }
+
     dCreate_Dense_Matrix(&B, m, nrhs, rhs, m, SLU_DN, SLU_D, SLU_GE);
 
     dgstrs(trans, &L, &U, perm_r, perm_c, &B, &Gstat1, &info);
-
 //    options.fact = FACTORED; /* Indicate the factored form of sluA is supplied. */
 //    options.usepr = YES;
 //    get_perm_c(permc_spec, &sluA, perm_c);
@@ -24,11 +27,10 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
 //        &equed, R, C, &L, &U, &B, &sluX, &rpg, &rcond,
 //        ferr, berr, &superlu_memusage, &info);
 
-    double *sol, *res;
-    res = doubleMalloc(m);
+    double *sol/*, *res*/;
+//    res = doubleMalloc(m);
     if (info == 0 || info == n + 1) {
         sol = (double*)((DNformat*)B.Store)->nzval;
-//        sol = (double*)((DNformat*)sluX.Store)->nzval;
     } else if (info > 0 && lwork == -1) {
         printf("dgssv() error returns INFO= " IFMT "\n", info);
         if ( info <= n ) { /* factorization completes */
@@ -40,14 +42,14 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
         }
     }
 
-    for(int i = 0; i < n; ++i){
-        res[i] = sol[i];
-    }
+//    for(int i = 0; i < n; ++i){
+//        res[i] = sol[i];
+//    }
 
     t1 = SuperLU_timer_() - t1;
 
     cout << "solveMatrix_LU time :" << t1 << endl;
-    return res;
+    return sol;
 }
 
 double *ParallelMatSolver::solveMatrix(umat locs, mat vals, vec F, int size)

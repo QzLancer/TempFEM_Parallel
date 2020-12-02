@@ -5,7 +5,7 @@
 using namespace std;
 
 void TLM3d1(){
-    TLMCore *temp = new TLMCore("../new_tempFEM/model/mesh_contactor3D_455944.mphtxt");
+    TLMCore *temp = new TLMCore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();

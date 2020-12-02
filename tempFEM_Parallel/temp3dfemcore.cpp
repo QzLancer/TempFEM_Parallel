@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <map>
+#include <omp.h>
+
 #pragma execution_character_set("utf-8")
 
 using namespace arma;
@@ -229,9 +231,13 @@ bool Temp3dfemcore::load3DFEMCOMSOL()
 void Temp3dfemcore::preCalculation()
 {
     //I:计算所有四面体单元中的p,q,r,s,volume
-    mat p0 = zeros<mat>(3,3);
-    mat v0 = zeros<mat>(4,4);
+
+    omp_set_num_threads(8);
+#pragma omp parallel for
     for(int i = 0; i < m_num_TetEle; ++i){
+        mat p0 = zeros<mat>(3,3);
+        mat v0 = zeros<mat>(4,4);
+
         for(int j = 0; j < 4; ++j){
             mp_TetEle[i].x[j] = mp_3DNode[mp_TetEle[i].n[j]].x;
             mp_TetEle[i].y[j] = mp_3DNode[mp_TetEle[i].n[j]].y;
@@ -318,6 +324,7 @@ void Temp3dfemcore::preCalculation()
     }
 
     //II:计算所有三角形单元的Area
+#pragma omp parallel for
     for(int i = 0; i < m_num_TriEle; ++i){
         for(int j = 0; j < 3; ++j){
             mp_TriEle[i].x[j] = mp_3DNode[mp_TriEle[i].n[j]].x;
@@ -370,8 +377,8 @@ void Temp3dfemcore::setCondition()
             mp_TetEle[i].LinearFlag = 1;
         }
         else if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 11)){
-            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
-//            mp_TetEle[i].cond = 0.001;
+//            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
+            mp_TetEle[i].cond = 0.01;
             mp_TetEle[i].Material = 3;
             mp_TetEle[i].LinearFlag = 0;
         }

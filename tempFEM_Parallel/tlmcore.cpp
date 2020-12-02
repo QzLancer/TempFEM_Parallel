@@ -1,4 +1,5 @@
 #include "tlmcore.h"
+#include "slu_mt_ddefs.h"
 
 #include <omp.h>
 
@@ -156,18 +157,22 @@ void TLMCore::TLMSolve1()
 //    Va_old = solveMatrix(locs, vals, F, m_num_pts);
     Va_old = solver->solveMatrix(locs, vals, F, m_num_pts);
 
-    char Vaoldpath[256];
-    sprintf(Vaoldpath,"../result/Temp3DTLM_%d_old.txt",m_num_TetEle);
-    std::ofstream myoldtemp(Vaoldpath);
-    for(int i = 0; i < m_num_pts; i++){
-        myoldtemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
-    }
+    ///////////////输出第一次求解结果
+//    char Vaoldpath[256];
+//    sprintf(Vaoldpath,"../result/Temp3DTLM_%d_old.txt",m_num_TetEle);
+//    std::ofstream myoldtemp(Vaoldpath);
+//    for(int i = 0; i < m_num_pts; i++){
+//        myoldtemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
+//    }
     cout << "First solve finish!" << endl;
 
     //8. 后续迭代求解 反射->入射
     const int ITER_MAX = 200;
     for(int iter = 0; iter < ITER_MAX; ++iter){
         vec I = zeros<vec>(m_num_pts);
+
+        double t1 = SuperLU_timer_();
+
         omp_set_num_threads(8);
 #pragma omp parallel for
         for(int k = 0; k < m_num_TetEle; ++k){
@@ -200,6 +205,9 @@ void TLMCore::TLMSolve1()
             }
         }
 
+        t1 = SuperLU_timer_() - t1;
+
+        cout << "Reflect time: " << t1 << endl;
         vec F2 = F + I;
 
         //分解后的LU直接计算
@@ -208,18 +216,18 @@ void TLMCore::TLMSolve1()
         Va = solver->solveMatrix_LU(F2);
 
         ////////////测试，输出I
-        char fpath[256];
-        sprintf(fpath,"../result/I_%d.txt",m_num_TetEle);
-        std::ofstream myI(fpath);
-        for(int i = 0; i < m_num_pts; i++){
-            myI << I[i] << endl;
-        }
-        sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);;
-        //    double temp[15076];
-        std::ofstream mytemp(fpath);
-        for(int i = 0; i < m_num_pts; i++){
-            mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
-        }
+//        char fpath[256];
+//        sprintf(fpath,"../result/I_%d.txt",m_num_TetEle);
+//        std::ofstream myI(fpath);
+//        for(int i = 0; i < m_num_pts; i++){
+//            myI << I[i] << endl;
+//        }
+//        sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);;
+//        //    double temp[15076];
+//        std::ofstream mytemp(fpath);
+//        for(int i = 0; i < m_num_pts; i++){
+//            mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+//        }
 
 
         //判断收敛性
@@ -247,13 +255,13 @@ void TLMCore::TLMSolve1()
 
 
 //    //输出结果
-//    char fpath[256];
-//    sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);
-//    std::ofstream mytemp(fpath);
-//    //    double temp[15076];
-//    for(int i = 0; i < m_num_pts; i++){
-//        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
-//    }
+    char fpath[256];
+    sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);
+    std::ofstream mytemp(fpath);
+    //    double temp[15076];
+    for(int i = 0; i < m_num_pts; i++){
+        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+    }
 
     cout<<"Ok." << endl;
     //释放内存
