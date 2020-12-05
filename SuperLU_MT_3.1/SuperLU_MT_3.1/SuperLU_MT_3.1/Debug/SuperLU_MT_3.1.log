@@ -1,0 +1,419 @@
+﻿  await.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cgscon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cgsequ.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cgsrfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cgstrs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cholnzcnt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  clacon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  clangs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  claqgs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cmatgen.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  cmyblas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  colamd.c
+  cpivotgrowth.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  creadhb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  creadmt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  creadrb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  csp_blas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  csp_blas3.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dclock.c
+  dcomplex.c
+  正在生成代码...
+  正在编译...
+  dgscon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dgsequ.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dgsrfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dgstrs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dlacon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dlamch.c
+  dlangs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dlaqgs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dmatgen.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dmyblas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dpivotgrowth.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dreadhb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dreadmt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dreadrb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dsp_blas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dsp_blas3.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  dzsum1.c
+  get_perm_c.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  heap_relax_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  icmax1.c
+D:\SuperLU_MT_3.1\SRC\icmax1.c(81,40): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\icmax1.c(91,38): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\icmax1.c(101,40): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\icmax1.c(110,37): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  正在生成代码...
+  正在编译...
+  izmax1.c
+  lsame.c
+  mmd.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgssv.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgssvx.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_bmod1D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_bmod1D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_bmod2D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_bmod2D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_column_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_column_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_copy_to_ucol.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_factor_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_panel_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_panel_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_pivotL.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_snode_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_snode_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  pcgstrf_thread.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_thread_finalize.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcgstrf_thread_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcmemory.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pcutil.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgssv.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgssvx.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_bmod1D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_bmod1D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_bmod2D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_bmod2D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_column_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_column_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_copy_to_ucol.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_factor_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_panel_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_panel_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_pivotL.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  pdgstrf_snode_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_snode_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_thread.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_thread_finalize.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdgstrf_thread_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdmemory.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pdutil.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pmemory.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgssv.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgssvx.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_bmod1D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_bmod1D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_bmod2D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_bmod2D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_column_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_column_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_copy_to_ucol.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_factor_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  psgstrf_panel_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_panel_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_pivotL.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_snode_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_snode_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_thread.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_thread_finalize.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psgstrf_thread_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psmemory.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  psutil.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_finalize.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_mark_busy_descends.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_pruneL.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_relax_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_scheduler.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_super_bnd_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pxgstrf_synch.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgssv.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgssvx.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  pzgstrf_bmod1D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_bmod1D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_bmod2D.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_bmod2D_mv2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_column_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_column_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_copy_to_ucol.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_factor_snode.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_panel_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_panel_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_pivotL.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_snode_bmod.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_snode_dfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_thread.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_thread_finalize.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzgstrf_thread_init.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzmemory.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  pzutil.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  qrnzcnt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  scomplex.c
+D:\SuperLU_MT_3.1\SRC\scomplex.c(75,38): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\scomplex.c(98,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\scomplex.c(99,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\scomplex.c(100,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  scsum1.c
+D:\SuperLU_MT_3.1\SRC\scsum1.c(83,24): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\scsum1.c(97,24): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+  sgscon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sgsequ.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sgsrfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sgstrs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  slacon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  slamch.c
+D:\SuperLU_MT_3.1\SRC\slamch.c(95,36): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(99,32): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(241,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(242,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(243,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(255,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(261,25): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(276,19): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(277,24): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(278,17): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(287,25): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(288,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(289,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(297,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(298,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(314,25): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(316,29): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(338,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(339,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(340,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(482,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(490,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(491,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(492,33): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(493,22): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(494,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(495,25): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(496,13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(513,31): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(514,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(515,31): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(516,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(517,23): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(518,31): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(519,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(540,35): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(543,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(545,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(548,19): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(635,35): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(749,31): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(761,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(763,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(771,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(773,28): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(941,21): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\SuperLU_MT_3.1\SRC\slamch.c(953,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  slangs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  slaqgs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  smatgen.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  smyblas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  spivotgrowth.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sp_coletree.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sp_colorder.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sp_ienv.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sreadhb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sreadmt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  sreadrb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  ssp_blas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...
+  正在编译...
+  ssp_blas3.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  superlu_timer.c
+  util.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  xerbla.c
+  zgscon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zgsequ.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zgsrfs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zgstrs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zlacon.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zlangs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zlaqgs.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zmatgen.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zmyblas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zpivotgrowth.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zreadhb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zreadmt.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zreadrb.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zsp_blas2.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  zsp_blas3.c
+D:\SuperLU_MT_3.1\SRC\slu_mt_util.h(120,10): fatal error C1083: 无法打开包括文件: “pthread.h”: No such file or directory
+  正在生成代码...

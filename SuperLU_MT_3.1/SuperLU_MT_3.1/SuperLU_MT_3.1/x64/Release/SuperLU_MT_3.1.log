@@ -1,0 +1,5 @@
+﻿  sp_ienv.c
+smatgen.obj : warning LNK4006: dlaran_ 已在 zmatgen.obj 中定义；已忽略第二个定义
+dmatgen.obj : warning LNK4006: dlaran_ 已在 zmatgen.obj 中定义；已忽略第二个定义
+cmatgen.obj : warning LNK4006: dlaran_ 已在 zmatgen.obj 中定义；已忽略第二个定义
+  SuperLU_MT_3.1.vcxproj -> D:\SuperLU_MT_3.1\SuperLU_MT_3.1\x64\Release\SuperLU_MT_3.1.lib
