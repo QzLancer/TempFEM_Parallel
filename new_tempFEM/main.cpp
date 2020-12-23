@@ -12,7 +12,7 @@ enum Demo{
 };
 
 void NR3d(){
-    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
+    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_365210.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();
@@ -39,7 +39,7 @@ void TLM3d1(){
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Demo showwhat = TLM1;
+    Demo showwhat = NR3D;
     switch (showwhat) {
     case NR3D:
         NR3d();

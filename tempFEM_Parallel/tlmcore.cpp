@@ -6,7 +6,7 @@
 TLMCore::TLMCore(const char *fn):
     Temp3dfemcore(fn)
 {
-
+    nprocs = 8;
 }
 
 TLMCore::~TLMCore()
@@ -155,6 +155,7 @@ void TLMCore::TLMSolve1()
 
     //7.第一次求解，由于Vi=0，右侧附加电流也为0
 //    Va_old = solveMatrix(locs, vals, F, m_num_pts);
+    double t1 = SuperLU_timer_();
     Va_old = solver->solveMatrix(locs, vals, F, m_num_pts);
 
     ///////////////输出第一次求解结果
@@ -164,37 +165,59 @@ void TLMCore::TLMSolve1()
 //    for(int i = 0; i < m_num_pts; i++){
 //        myoldtemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va_old[i] << endl;
 //    }
-    cout << "First solve finish!" << endl;
+    t1 = SuperLU_timer_() - t1;
+    cout << "First solve finish!, time = " << t1 << endl;
 
     //8. 后续迭代求解 反射->入射
-    const int ITER_MAX = 200;
+    const int ITER_MAX = 1000;
     for(int iter = 0; iter < ITER_MAX; ++iter){
         vec I = zeros<vec>(m_num_pts);
 
         double t1 = SuperLU_timer_();
 
-        omp_set_num_threads(8);
+        omp_set_num_threads(nprocs);
 #pragma omp parallel for
         for(int k = 0; k < m_num_TetEle; ++k){
             if(mp_TetEle[k].LinearFlag == 0){
                 double avgT = (Va_old[mp_TetEle[k].n[0]] + Va_old[mp_TetEle[k].n[1]] + Va_old[mp_TetEle[k].n[2]] + Va_old[mp_TetEle[k].n[3]])/4;
-//                double cond = TtoCond(avgT);
-                double cond = 0.03;
+                double Cond;
+                switch(mp_TetEle[k].Material){
+                case(Copper):
+                    Cond = CopperTtoCond(avgT);
+                    break;
+                case(Iron):
+                    Cond = IronTtoCond(avgT);
+                    break;
+                case(Air):
+                    Cond = AirTtoCond(avgT);
+                    break;
+                case(Iron304):
+                    Cond = Iron304TtoCond(avgT);
+                    break;
+                case(Kapton):
+                    Cond = KaptonTtoCond(avgT);
+                    break;
+                }
                 for(int i = 0; i < 4; ++i){
                     for(int j = 0; j < 4; ++j){
                         if(i != j){
-                            double Si = cond * TetResist[k].C[i][j];
+                            double Si = Cond * TetResist[k].C[i][j];
                             double Vd  = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]];
                             if(Si < 0){
                                 double Vr = Vd - TetVi[k].Vi[i][j];
                                 double Vc = 2*Vr*TetY0[k].Y0[i][j]/(TetY0[k].Y0[i][j] - Si);
-                                TetVi[k].Vi[i][j] = Vc - Vr;
+
+                                /////////未引入松弛因子
+//                                TetVi[k].Vi[i][j] = Vc - Vr;
+//                                I(mp_TetEle[k].n[i]) += 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
+
+                                /////////引入松弛因子
+                                double Vi = Vc - Vr;
+                                double fac = 1;
+                                TetVi[k].Vi[i][j] = TetVi[k].Vi[i][j] + fac*(Vi - TetVi[k].Vi[i][j]);
                                 I(mp_TetEle[k].n[i]) += 2*TetY0[k].Y0[i][j]*TetVi[k].Vi[i][j];
 
-//                                double Vr = Va_old[mp_TetEle[k].n[i]] - Va_old[mp_TetEle[k].n[j]] - TetVi[k].Vi[i][j];
-//                                double Vc = 2*Vr*Y0/(Y0 - Si);
-//                                TetVi[k].Vi[i][j] = Vc - Vr;
-//                                I(mp_TetEle[k].n[i]) += 2*Y0*TetVi[k].Vi[i][j];
+
                             }
                             else{
                                 I(mp_TetEle[k].n[i]) = I(mp_TetEle[k].n[i]) + Si*Vd;
@@ -205,9 +228,9 @@ void TLMCore::TLMSolve1()
             }
         }
 
-        t1 = SuperLU_timer_() - t1;
+        double t2 = SuperLU_timer_() - t1;
 
-        cout << "Reflect time: " << t1 << endl;
+        cout << "Reflect time: " << t2 << endl;
         vec F2 = F + I;
 
         //分解后的LU直接计算
@@ -240,12 +263,16 @@ void TLMCore::TLMSolve1()
         inner_error = sqrt(a0)/sqrt(b);
         cout << "inner_error = " << inner_error << endl;
         if(inner_error > Precision){
-            cout << "iter step " << iter << endl;
+            double t2 = SuperLU_timer_();
+            double time = t2-t1;
+            cout << "iter step " << iter << " time = " << time << endl;
             for(int i = 0; i < m_num_pts; ++i){
                 Va_old[i] = Va[i];
             }
         }else{
-            cout << "iter step " << iter << endl;
+            double t2 = SuperLU_timer_();
+            double time = t2-t1;
+            cout << "iter step " << iter << " time = " << time << endl;
             for(int i = 0; i < m_num_pts; ++i){
                 mp_3DNode[i].V = Va[i];
             }
@@ -259,10 +286,10 @@ void TLMCore::TLMSolve1()
     sprintf(fpath,"../result/Temp3DTLM_%d.txt",m_num_TetEle);
     std::ofstream mytemp(fpath);
     //    double temp[15076];
+    mytemp << "x,y,z,Temp(K)" << endl;
     for(int i = 0; i < m_num_pts; i++){
-        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+        mytemp << mp_3DNode[i].x << "," << mp_3DNode[i].y << "," << mp_3DNode[i].z << "," << Va[i] << endl;
     }
-
     cout<<"Ok." << endl;
     //释放内存
     free(TetVi);

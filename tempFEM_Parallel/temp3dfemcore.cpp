@@ -23,6 +23,7 @@ Temp3dfemcore::Temp3dfemcore(const char *fn):
     mp_TetEle(nullptr),
     m_tpartTable(new int(0)),
     m_npartTable(new int(0)),
+    nprocs(8),
     solver(new ParallelMatSolver)
 {
 
@@ -232,7 +233,7 @@ void Temp3dfemcore::preCalculation()
 {
     //I:计算所有四面体单元中的p,q,r,s,volume
 
-    omp_set_num_threads(8);
+    omp_set_num_threads(nprocs);
 #pragma omp parallel for
     for(int i = 0; i < m_num_TetEle; ++i){
         mat p0 = zeros<mat>(3,3);
@@ -347,52 +348,141 @@ void Temp3dfemcore::preCalculation()
     }
 }
 
-void Temp3dfemcore::setCondition()
+void Temp3dfemcore::setCondition(Modeltype model)
 {
-    //热源设置
-    //        std::ofstream mytetsource("../tempFEM/test/tetsource.txt");
-    for(int i = 0; i < m_num_TetEle; ++i){
-        if((mp_TetEle[i].domain == 7) | (mp_TetEle[i].domain == 9)){
-            mp_TetEle[i].source = 500000;
-        }else{
-            mp_TetEle[i].source = 0;
+    switch (model) {
+    case MODEL1:
+        //热源设置
+        //        std::ofstream mytetsource("../tempFEM/test/tetsource.txt");
+        for(int i = 0; i < m_num_TetEle; ++i){
+            if((mp_TetEle[i].domain == 7) | (mp_TetEle[i].domain == 9)){
+                mp_TetEle[i].source = 500000;
+            }else{
+                mp_TetEle[i].source = 0;
+            }
+            //         mytetsource << "mp_TetEle " << i << " domain = " << mp_TetEle[i].source << endl;
         }
-        //         mytetsource << "mp_TetEle " << i << " domain = " << mp_TetEle[i].source << endl;
+        //热导率设置
+        for(int i = 0; i < m_num_TetEle; ++i){
+            if((mp_TetEle[i].domain == 7) | (mp_TetEle[i].domain == 9)){
+                mp_TetEle[i].cond = 386.6;
+                mp_TetEle[i].Material = Copper;
+                mp_TetEle[i].LinearFlag = 1;
+            }
+            else if((mp_TetEle[i].domain == 2) | (mp_TetEle[i].domain == 4) | (mp_TetEle[i].domain == 10) | (mp_TetEle[i].domain == 12)| (mp_TetEle[i].domain == 13)){
+                mp_TetEle[i].cond = 80.32;
+                mp_TetEle[i].Material = Iron;
+                mp_TetEle[i].LinearFlag = 1;
+            }
+            else if((mp_TetEle[i].domain == 1) | (mp_TetEle[i].domain == 6) | (mp_TetEle[i].domain == 8)){
+                mp_TetEle[i].cond = 0.26;
+                mp_TetEle[i].Material = Nylon;
+                mp_TetEle[i].LinearFlag = 1;
+            }
+            else if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 11)){
+    //            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
+                mp_TetEle[i].cond = 0.01;
+                mp_TetEle[i].Material = Air;
+                mp_TetEle[i].LinearFlag = 0;
+            }
+        }
+        //第三类边界条件设置
+        for(int i = 0; i < m_num_TriEle; ++i){
+            if((mp_TriEle[i].domain == 1) | (mp_TriEle[i].domain == 2) | (mp_TriEle[i].domain == 3) | (mp_TriEle[i].domain == 4) |
+                    (mp_TriEle[i].domain == 5) | (mp_TriEle[i].domain == 6) | (mp_TriEle[i].domain == 91) | (mp_TriEle[i].domain == 92) |
+                    (mp_TriEle[i].domain == 93) | (mp_TriEle[i].domain == 137) | (mp_TriEle[i].domain == 143) | (mp_TriEle[i].domain == 183)){
+                mp_TriEle[i].bdr = 3;
+                mp_TriEle[i].h = 20;
+                mp_TriEle[i].Text = 293.15;
+            }
+        }
+        break;
+
+    case MODEL2:
+        //热源设置
+        //        std::ofstream mytetsource("../tempFEM/test/tetsource.txt");
+        for(int i = 0; i < m_num_TetEle; ++i){
+            if(mp_TetEle[i].domain == 3){
+                mp_TetEle[i].source = 200000;
+            }else if(mp_TetEle[i].domain == 12 || mp_TetEle[i].domain == 15){
+                mp_TetEle[i].source = 100000;
+            }else{
+                mp_TetEle[i].source = 0;
+            }
+            //         mytetsource << "mp_TetEle " << i << " domain = " << mp_TetEle[i].source << endl;
+        }
+        //热导率设置
+        for(int i = 0; i < m_num_TetEle; ++i){
+            if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 9) | (mp_TetEle[i].domain == 10) | (mp_TetEle[i].domain == 11) |
+                    (mp_TetEle[i].domain == 12) | (mp_TetEle[i].domain == 13) | (mp_TetEle[i].domain == 15) | (mp_TetEle[i].domain == 16) |
+                    (mp_TetEle[i].domain == 17)){
+                mp_TetEle[i].cond = 386.6;
+                mp_TetEle[i].Material = Copper;
+                mp_TetEle[i].LinearFlag = 1;
+            }
+
+//            if((mp_TetEle[i].domain == 9) | (mp_TetEle[i].domain == 10) | (mp_TetEle[i].domain == 11) |
+//                    (mp_TetEle[i].domain == 13) | (mp_TetEle[i].domain == 16) |
+//                    (mp_TetEle[i].domain == 17)){
+//                mp_TetEle[i].cond = 386.6;
+//                mp_TetEle[i].Material = Iron;
+//                mp_TetEle[i].LinearFlag = 0;
+//            }
+//            else if(mp_TetEle[i].domain == 3 | mp_TetEle[i].domain == 12 | mp_TetEle[i].domain == 15){
+//                mp_TetEle[i].cond = 386.6;
+//                mp_TetEle[i].Material = Iron;
+//                mp_TetEle[i].LinearFlag = 1;
+//            }
+
+            else if((mp_TetEle[i].domain == 1) | (mp_TetEle[i].domain == 6) | (mp_TetEle[i].domain == 8)){
+                mp_TetEle[i].cond = 76.2;
+                mp_TetEle[i].Material = Iron;
+                mp_TetEle[i].LinearFlag = 0;
+            }
+            else if((mp_TetEle[i].domain == 18) | (mp_TetEle[i].domain == 21) | (mp_TetEle[i].domain == 22)){
+                mp_TetEle[i].cond = 15.33;
+                mp_TetEle[i].Material = Iron304;
+                mp_TetEle[i].LinearFlag = 0;
+            }
+            else if((mp_TetEle[i].domain == 4) | (mp_TetEle[i].domain == 20)){
+                mp_TetEle[i].cond = 16.7;
+                mp_TetEle[i].Material = Ceramics;
+                mp_TetEle[i].LinearFlag = 1;
+            }
+            else if(mp_TetEle[i].domain == 2){
+                mp_TetEle[i].cond = 1.76;
+                mp_TetEle[i].Material = Kapton;
+                mp_TetEle[i].LinearFlag = 0;
+            }
+            else if((mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 7) | (mp_TetEle[i].domain == 14) | (mp_TetEle[i].domain == 19) |
+                        (mp_TetEle[i].domain == 20)){
+    //            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
+                mp_TetEle[i].cond = 0.01;
+                mp_TetEle[i].Material = Air;
+                mp_TetEle[i].LinearFlag = 0;
+            }
+        }
+        //第三类边界条件设置
+        for(int i = 0; i < m_num_TriEle; ++i){
+            if((mp_TriEle[i].domain == 1) | (mp_TriEle[i].domain == 2) | (mp_TriEle[i].domain == 3) | (mp_TriEle[i].domain == 4) |
+                    (mp_TriEle[i].domain == 5) | (mp_TriEle[i].domain == 6) | (mp_TriEle[i].domain == 7) | (mp_TriEle[i].domain == 8) |
+                    (mp_TriEle[i].domain == 9) | (mp_TriEle[i].domain == 10) | (mp_TriEle[i].domain == 29) | (mp_TriEle[i].domain == 30) |
+                    (mp_TriEle[i].domain == 63) | (mp_TriEle[i].domain == 64) | (mp_TriEle[i].domain == 67) | (mp_TriEle[i].domain == 68) |
+                    (mp_TriEle[i].domain == 77) | (mp_TriEle[i].domain == 78) | (mp_TriEle[i].domain == 81) | (mp_TriEle[i].domain == 82) |
+                    (mp_TriEle[i].domain == 138) | (mp_TriEle[i].domain == 139) | (mp_TriEle[i].domain == 162) | (mp_TriEle[i].domain == 163) |
+                    (mp_TriEle[i].domain == 164) | (mp_TriEle[i].domain == 165) | (mp_TriEle[i].domain == 166) | (mp_TriEle[i].domain == 176) |
+                    (mp_TriEle[i].domain == 181) | (mp_TriEle[i].domain == 183) | (mp_TriEle[i].domain == 198) | (mp_TriEle[i].domain == 216) |
+                    (mp_TriEle[i].domain == 233) | (mp_TriEle[i].domain == 245) | (mp_TriEle[i].domain == 254) | (mp_TriEle[i].domain == 286) |
+                    (mp_TriEle[i].domain == 288) | (mp_TriEle[i].domain == 314) | (mp_TriEle[i].domain == 320) | (mp_TriEle[i].domain == 324) |
+                    (mp_TriEle[i].domain == 325) | (mp_TriEle[i].domain == 329) | (mp_TriEle[i].domain == 330) | (mp_TriEle[i].domain == 331)){
+                mp_TriEle[i].bdr = 3;
+                mp_TriEle[i].h = 25;
+                mp_TriEle[i].Text = 293.15;
+            }
+        }
+        break;
     }
-    //热导率设置
-    for(int i = 0; i < m_num_TetEle; ++i){
-        if((mp_TetEle[i].domain == 7) | (mp_TetEle[i].domain == 9)){
-            mp_TetEle[i].cond = 400;
-            mp_TetEle[i].Material = 0;
-            mp_TetEle[i].LinearFlag = 1;
-        }
-        else if((mp_TetEle[i].domain == 2) | (mp_TetEle[i].domain == 4) | (mp_TetEle[i].domain == 10) | (mp_TetEle[i].domain == 12)| (mp_TetEle[i].domain == 13)){
-            mp_TetEle[i].cond = 76.2;
-            mp_TetEle[i].Material = 1;
-            mp_TetEle[i].LinearFlag = 1;
-        }
-        else if((mp_TetEle[i].domain == 1) | (mp_TetEle[i].domain == 6) | (mp_TetEle[i].domain == 8)){
-            mp_TetEle[i].cond = 0.26;
-            mp_TetEle[i].Material = 2;
-            mp_TetEle[i].LinearFlag = 1;
-        }
-        else if((mp_TetEle[i].domain == 3) | (mp_TetEle[i].domain == 5) | (mp_TetEle[i].domain == 11)){
-//            mp_TetEle[i].cond = 0.03;   //初始猜测，用于Y0的计算
-            mp_TetEle[i].cond = 0.01;
-            mp_TetEle[i].Material = 3;
-            mp_TetEle[i].LinearFlag = 0;
-        }
-    }
-    //第三类边界条件设置
-    for(int i = 0; i < m_num_TriEle; ++i){
-        if((mp_TriEle[i].domain == 1) | (mp_TriEle[i].domain == 2) | (mp_TriEle[i].domain == 3) | (mp_TriEle[i].domain == 4) |
-                (mp_TriEle[i].domain == 5) | (mp_TriEle[i].domain == 6) | (mp_TriEle[i].domain == 91) | (mp_TriEle[i].domain == 92) |
-                (mp_TriEle[i].domain == 93) | (mp_TriEle[i].domain == 137) | (mp_TriEle[i].domain == 143) | (mp_TriEle[i].domain == 183)){
-            mp_TriEle[i].bdr = 3;
-            mp_TriEle[i].h = 20;
-            mp_TriEle[i].Text = 293.15;
-        }
-    }
+
 }
 
 void Temp3dfemcore::NRSolve()
@@ -481,13 +571,13 @@ void Temp3dfemcore::NRSolve()
     }
 
     //5.迭代过程
-    clock_t t1, t2;
+    double t1, t2;
     double time;
     int MAX_ITER = 200;
     int pos1 = pos;
     vec F1 = F;
     for(int iter = 0; iter < MAX_ITER; ++iter){
-        t1 = clock();
+        t1 = SuperLU_timer_();
         pos = pos1;
         F = F1;
         for(int k = 0; k < m_num_TetEle; ++k){
@@ -497,9 +587,32 @@ void Temp3dfemcore::NRSolve()
                     n[i] = mp_TetEle[k].n[i];
                 }
                 double T = (Va[n[0]]+Va[n[1]]+Va[n[2]]+Va[n[3]])/4;
-                double Cond = TtoCond(T);
-                //                qDebug() << "Cond = " << Cond;
-                double CondPartialT = (TtoCond(T+0.01)-TtoCond(T))/0.01;
+                //根据材料的类型计算热导率
+                double Cond;
+                double CondPartialT;
+                switch(mp_TetEle[k].Material){
+                case(Copper):
+                    Cond = CopperTtoCond(T);
+                    CondPartialT = (CopperTtoCond(T+0.01)-CopperTtoCond(T))/0.01;
+                    break;
+                case(Iron):
+                    Cond = IronTtoCond(T);
+                    CondPartialT = (IronTtoCond(T+0.01)-IronTtoCond(T))/0.01;
+                    break;
+                case(Air):
+                    Cond = AirTtoCond(T);
+                    CondPartialT = (AirTtoCond(T+0.01)-AirTtoCond(T))/0.01;
+                    break;
+                case(Iron304):
+                    Cond = Iron304TtoCond(T);
+                    CondPartialT = (Iron304TtoCond(T+0.01)-Iron304TtoCond(T))/0.01;
+                    break;
+                case(Kapton):
+                    Cond = KaptonTtoCond(T);
+                    CondPartialT = (KaptonTtoCond(T+0.01)-KaptonTtoCond(T))/0.01;
+                    break;
+                }
+//                                cout << "Cond = " << Cond << endl;
                 //                qDebug() << "CondPartialT = " << CondPartialT;
                 for(int i = 0; i < 4; ++i){
                     double FJ = 0;
@@ -517,9 +630,12 @@ void Temp3dfemcore::NRSolve()
             }
         }
 
+        t2 = SuperLU_timer_();
+
+        cout << "Jacobi Assemble time: " << t2 - t1 << endl;
+
 //        Va = solveMatrix(locs, vals, F, m_num_pts);
         Va = solver->solveMatrix(locs, vals, F, m_num_pts);
-
         //6.判断收敛性
         double inner_error = 1;
         double a0 = 0, b = 0;
@@ -532,15 +648,15 @@ void Temp3dfemcore::NRSolve()
         inner_error = sqrt(a0)/sqrt(b);
         cout << "inner_error = " << inner_error << endl;
         if(inner_error > Precision){
-            t2 = clock();
-            time = (double)(t2-t1)/CLOCKS_PER_SEC;
+            t2 = SuperLU_timer_();
+            time = t2-t1;
             cout << "iter step " << iter << " time = " << time << endl;
             for(int i = 0; i < m_num_pts; ++i){
                 Va_old[i] = Va[i];
             }
         }else{
-            t2 = clock();
-            time = (double)(t2-t1)/CLOCKS_PER_SEC;
+            t2 = SuperLU_timer_();
+            time = t2-t1;
             cout << "iter step " << iter << " time = " << time << endl;
             for(int i = 0; i < m_num_pts; ++i){
                 mp_3DNode[i].V = Va[i];
@@ -548,20 +664,75 @@ void Temp3dfemcore::NRSolve()
             break;
         }
     }
-    //输出结果
+    ///////////输出结果
     char fpath[256];
     sprintf(fpath,"../result/Temp3DNR_%d.txt",m_num_TetEle);
     std::ofstream mytemp(fpath);
     //    double temp[15076];
+    mytemp << "x,y,z,Temp(K)" << endl;
     for(int i = 0; i < m_num_pts; i++){
-        mytemp << mp_3DNode[i].x << " " << mp_3DNode[i].y << " " << mp_3DNode[i].z << " " << Va[i] << endl;
+        mytemp << mp_3DNode[i].x << "," << mp_3DNode[i].y << "," << mp_3DNode[i].z << "," << Va[i] << endl;
     }
 
     cout << "Ok." << endl;
 }
 
-double Temp3dfemcore::TtoCond(double T)
+double Temp3dfemcore::AirTtoCond(double T)
 {
     return -0.00227583562+1.15480022e-4*T-7.90252856e-8*T*T+4.11702505e-11*T*T*T-7.43864331e-15*T*T*T*T;
+
 }
 
+double Temp3dfemcore::CopperTtoCond(double T)
+{
+    if(T >= 1 && T < 40){
+        return 12.55868+36.66487*T+1.387207*T*T-0.07168113*T*T*T+6.99799E-4*T*T*T*T;
+    }else if(T >= 40 && T < 70){
+        return 2174.919-45.25448*T+0.3738471*T*T-9.504397E-4*T*T*T;
+    }else if(T >= 70 && T < 100){
+        return 2545.87-67.53869*T+0.8176488*T*T-0.004470238*T*T*T+9.22619E-6*T*T*T*T;
+    }else if(T >= 100 && T < 300){
+        return 555.4-2.116905*T+0.008971429*T*T-1.266667E-5*T*T*T;
+    }
+
+    return 423.7411-0.3133575*T+0.001013916*T*T-1.570451E-6*T*T*T+1.06222E-9*T*T*T*T-2.64198E-13*T*T*T*T*T;
+
+}
+
+double Temp3dfemcore::IronTtoCond(double T)
+{
+    if(T >= 1 && T < 20){
+        return 161.9832*T+4.851772*T*T-0.7906936*T*T*T+0.01675048*T*T*T*T;
+    }else if(T >= 20 && T < 68.5){
+        return 2218.339+23.88314*T-5.081026*T*T+0.1373453*T*T*T-0.001490064*T*T*T*T+5.882957E-6*T*T*T*T*T;
+    }else if(T >= 68.5 && T < 155.0){
+        return 1682.9-46.91385*T+0.5423243*T*T-0.002845324*T*T*T+5.647112E-6*T*T*T*T;
+    }else if(T >= 155.0 && T < 1183.0){
+        return 155.6355-0.4470943*T+8.9922E-4*T*T-9.859391E-7*T*T*T+4.862049E-10*T*T*T*T-7.562752E-14*T*T*T*T*T;
+    }
+
+    return -5.097463+0.03983086*T-9.936321E-6*T*T;
+
+}
+
+double Temp3dfemcore::Iron304TtoCond(double T)
+{
+    if(T >= 1 && T < 45){
+        return -0.03740871+0.06460546*T+0.003720604*T*T-8.390067E-5*T*T*T+6.006594E-7*T*T*T*T;
+    }else if(T >= 45 && T < 293){
+        return -1.031521+0.1813807*T-0.001088656*T*T+3.411681E-6*T*T*T-3.988389E-9*T*T*T*T;
+    }
+
+    return 6.742253+0.02864915*T;
+
+}
+
+double Temp3dfemcore::KaptonTtoCond(double T)
+{
+    if(T >= 1 && T < 45){
+        return -0.001372384+0.005601653*T+2.082966E-6*T*T-5.05445E-9*T*T*T;
+    }
+
+    return -0.007707532+0.005769136*T+5.622796E-7*T*T-4.329984E-10*T*T*T;
+
+}

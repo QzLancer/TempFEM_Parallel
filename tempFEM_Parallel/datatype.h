@@ -1,6 +1,21 @@
 #ifndef DATATYPE_H
 #define DATATYPE_H
 
+enum MaterialType{
+    Copper = 0,
+    Iron = 1,
+    Ceramics = 2,
+    Air = 3,
+    Iron304 = 4,
+    Kapton = 5,
+    Nylon = 6
+};
+
+enum Modeltype{
+    MODEL1,
+    MODEL2
+};
+
 struct  C3DNode{
     double x{0}, y{0}, z{0};
     double V{273.15};
@@ -60,7 +75,7 @@ struct CTetElement{
     double Volume{0};
     double source{0};
     bool LinearFlag{0};
-    int Material{0};
+    MaterialType Material{Air};
 };
 
 struct CTriResistMatrix{
@@ -83,4 +98,6 @@ struct CInterfacePoint{
     double Y0{0};   //传输线导纳
     double Vi{0};   //入射电压或者反射电压
 };
+
+
 #endif // DATATYPE_H

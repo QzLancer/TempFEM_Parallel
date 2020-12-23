@@ -20,9 +20,13 @@ public:
     ~Temp3dfemcore();
     bool load3DFEMCOMSOL();
     void preCalculation();
-    void setCondition();
+    void setCondition(Modeltype TYPE);
     void NRSolve();
-    double TtoCond(double T);
+    double AirTtoCond(double T);
+    double CopperTtoCond(double T);
+    double IronTtoCond(double T);
+    double Iron304TtoCond(double T);
+    double KaptonTtoCond(double T);
 
     //DDTLM相关
     bool GenerateMetisMesh(int partition);
@@ -47,6 +51,8 @@ protected:
     int m_num_part{0};
     int *m_tpartTable;    //保存三角形单元在第几个分区
     int *m_npartTable;    //保存节点在第几个分区
+
+    int nprocs;
 
     MatSolver *solver;
 };

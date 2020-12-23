@@ -10,6 +10,7 @@ public:
     TLMCore(const char *fn);
     ~TLMCore();
     void TLMSolve1();   //TLM解决方案1，选取热导率初值带入
+
 };
 
 #endif // TLMCORE_H

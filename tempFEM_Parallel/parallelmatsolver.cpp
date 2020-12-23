@@ -10,7 +10,7 @@ double *ParallelMatSolver::solveMatrix_LU(vec F)
 {
     double t1 = SuperLU_timer_();
 
-    omp_set_num_threads(8);
+    omp_set_num_threads(nprocs);
 #pragma omp parallel for
     for (int i = 0; i < m; i++){
         rhs[i] = F(i);
@@ -159,7 +159,6 @@ double *ParallelMatSolver::solveMatrix(umat locs, mat vals, vec F, int size)
     for(int i = 0; i < size; ++i){
         res[i] = sol[i];
     }
-
     return res;
 }
 
