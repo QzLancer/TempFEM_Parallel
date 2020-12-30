@@ -91,7 +91,11 @@ struct CTetConnanceMatrix{
 };
 
 struct CTetVoltageMatrix{
-    double Vi[4][4];
+    double V[4][4];
+};
+
+struct CTetCurrentMatrix{
+    double I[4][4];
 };
 
 struct CInterfacePoint{
