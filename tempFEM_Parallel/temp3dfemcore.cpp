@@ -665,14 +665,66 @@ void Temp3dfemcore::NRSolve()
         }
     }
     ///////////输出结果
-    char fpath[256];
-    sprintf(fpath,"../result/Temp3DNR_%d.txt",m_num_TetEle);
-    std::ofstream mytemp(fpath);
-    //    double temp[15076];
-    mytemp << "x,y,z,Temp(K)" << endl;
-    for(int i = 0; i < m_num_pts; i++){
-        mytemp << mp_3DNode[i].x << "," << mp_3DNode[i].y << "," << mp_3DNode[i].z << "," << Va[i] << endl;
+//    char fpath[256];
+//    sprintf(fpath,"../result/Temp3DNR_%d.txt",m_num_TetEle);
+//    std::ofstream mytemp(fpath);
+//    //    double temp[15076];
+//    mytemp << "x,y,z,Temp(K)" << endl;
+//    for(int i = 0; i < m_num_pts; i++){
+//        mytemp << mp_3DNode[i].x << "," << mp_3DNode[i].y << "," << mp_3DNode[i].z << "," << Va[i] << endl;
+//    }
+
+    std::string name = std::string("../result/Temp3DNR_%d.vtk");
+    FILE* fp = nullptr;
+    int err;
+    char ch[256];
+    err = fopen_s(&fp, name.c_str(), "w");
+    if (!fp) {
+        std::cout << "Error: opening file!" << endl;
+        exit(0);
     }
+    /*
+         1: points
+         3: line
+         5: Triangular element
+         9: Quadrilateral element
+        10: Tetrahedral element
+        12: Hexahedral element
+        13: Triangular prism element
+        14: Pyramid element
+    */
+    /** 数据版本声明 **/
+    fprintf(fp, "# vtk DataFile Version 2.0\n");
+    /** 标题 **/
+    fprintf(fp, "vtk title\n");
+    /** 文件格式声明 **/
+    fprintf(fp, "ASCII\n");
+    /** 几何拓扑结构 **/
+    fprintf(fp, "DATASET UNSTRUCTURED_GRID\n");
+
+    //节点
+    fprintf(fp, "\nPOINTS %d float\n", m_num_pts);
+    for (int i = 0; i < m_num_pts; ++i) {
+        fprintf(fp, "%lf %lf %lf\n", mp_3DNode[i].x, mp_3DNode[i].y, mp_3DNode[i].z);
+    }
+    //一阶四面体单元
+    fprintf(fp, "\nCELLS %d %d\n", m_num_TetEle, 5 * m_num_TetEle);
+    for (int i = 0; i < m_num_TetEle; ++i) {
+        fprintf(fp, "4 %d %d %d %d\n", mp_TetEle[i].n[0], mp_TetEle[i].n[1], mp_TetEle[i].n[2], mp_TetEle[i].n[3]);
+    }
+    fprintf(fp, "\nCELL_TYPES %d\n", m_num_TetEle);
+    int type = 10;
+    for (int i = 0; i < m_num_TetEle; ++i) {
+        fprintf(fp, "%d\n", type);
+    }
+    //节点温度
+    fprintf(fp, "\nPOINT_DATA %d\n", m_num_pts);
+    fprintf(fp, "SCALARS T double 1\n");
+    fprintf(fp, "LOOKUP_TABLE %s\n", "Ttable");
+    for (int i = 0; i < m_num_pts; ++i) {
+        fprintf(fp, "%f\n", Va[i]);
+    }
+    fclose(fp);
 
     cout << "Ok." << endl;
 }
@@ -734,5 +786,10 @@ double Temp3dfemcore::KaptonTtoCond(double T)
     }
 
     return -0.007707532+0.005769136*T+5.622796E-7*T*T-4.329984E-10*T*T*T;
+
+}
+
+void Temp3dfemcore::outputResult()
+{
 
 }

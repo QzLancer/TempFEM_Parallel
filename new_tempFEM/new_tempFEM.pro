@@ -65,9 +65,9 @@ INCLUDEPATH += $$PWD/../armadillo/include \
 
 DEPENDPATH += $$PWD/../armadillo/include
 
-LIBS += $$PWD/../metis.lib \
-        $$PWD/../SuperLU_5.2.1/SuperLU/x64/Release/SuperLU.lib \
-        $$PWD/../SuperLU_5.2.1/SuperLU/x64/Release/CBLAS.lib \
+LIBS += $$PWD/../metis-5.1.0/metis.lib \
+        $$PWD/../SuperLU_5.2.1/lib/SuperLU.lib \
+        $$PWD/../SuperLU_5.2.1/lib/CBLAS.lib \
 
 CONFIG +=console
 

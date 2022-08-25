@@ -27,8 +27,8 @@ SOURCES += \
 
 # SUPERLU_MT位置
 LIBS += \
-    D:/SuperLU_MT_3.1/SuperLU_MT_3.1/x64/Release/SuperLU_MT_3.1.lib \
-    D:/OpenBLAS-0.3.10/lib/RELEASE/openblas.lib \
+    D:/SuperLU_MT/SuperLU_MT_3.1r.lib \
+    D:/SuperLU_MT/openblas.lib  \
 
 INCLUDEPATH += \
     D:/SuperLU_MT_3.1/SRC \

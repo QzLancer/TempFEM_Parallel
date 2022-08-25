@@ -87,7 +87,7 @@ struct CTetResistMatrix{
 };
 
 struct CTetConnanceMatrix{
-    double Y0[4][4];
+    double Y[4][4];
 };
 
 struct CTetVoltageMatrix{

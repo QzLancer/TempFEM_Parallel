@@ -27,6 +27,7 @@ public:
     double IronTtoCond(double T);
     double Iron304TtoCond(double T);
     double KaptonTtoCond(double T);
+    void outputResult();
 
     //DDTLM相关
     bool GenerateMetisMesh(int partition);
