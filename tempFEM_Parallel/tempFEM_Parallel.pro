@@ -53,7 +53,7 @@ INCLUDEPATH += $$PWD/../armadillo/include \
 
 DEPENDPATH += $$PWD/../armadillo/include \
 
-LIBS += $$PWD/../metis.lib \
+LIBS += $$PWD/../metis-5.1.0/metis.lib \
 
 CONFIG += console
 
