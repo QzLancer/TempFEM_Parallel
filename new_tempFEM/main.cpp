@@ -12,7 +12,7 @@ enum Demo{
 };
 
 void NR3d(){
-    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_365210.mphtxt");
+    Temp3dfemcore *temp = new Temp3dfemcore("../new_tempFEM/model/mesh_contactor3D_212662.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition();

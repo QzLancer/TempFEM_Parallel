@@ -27,11 +27,11 @@ SOURCES += \
 
 # SUPERLU_MT位置
 LIBS += \
-    D:/SuperLU_MT/SuperLU_MT_3.1r.lib \
-    D:/SuperLU_MT/openblas.lib  \
+    ../SuperLU_MT_3.1/SuperLU_MT_3.1r.lib \
+    ../SuperLU_MT_3.1/openblas.lib  \
 
 INCLUDEPATH += \
-    D:/SuperLU_MT_3.1/SRC \
+    ../SuperLU_MT_3.1/SRC \
 
 CONFIG += debug_and_release
 

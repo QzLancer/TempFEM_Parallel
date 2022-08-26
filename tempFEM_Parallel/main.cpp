@@ -8,7 +8,7 @@ using namespace std;
 Modeltype model = MODEL2;
 
 void TLM3d(){
-    TLMCore *temp = new TLMCore("../tempFEM_Parallel/model/mesh_relay3D_118129.mphtxt");
+    TLMCore *temp = new TLMCore("../tempFEM_Parallel/model/mesh_relay3D_22964.mphtxt");
     temp->load3DFEMCOMSOL();
     temp->preCalculation();
     temp->setCondition(model);
