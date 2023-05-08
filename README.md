@@ -5,7 +5,8 @@
 
 #### 软件架构
 new_tempFEM：使用单线程直接法矩阵SuperLU，通过DD-TLM的区域分解实现并行化
-tempFEM_Paraller，主要是传统TLM和Adaptive_TLM，使用并行直接法矩阵求解器SuperLU_MT
+
+tempFEM_Parallel，主要是传统TLM和Adaptive_TLM，使用并行直接法矩阵求解器SuperLU_MT
 
 #### 编译环境：
 - visual studio2019及以上：https://visualstudio.microsoft.com/zh-hans/
